@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "network.h"
+@interface VehicleChallanViewController : UIViewController<UITextFieldDelegate>
+{
+    network *nw;
+    void (^_completionHandler)(NSArray *response);
+}
+@property (weak, nonatomic) IBOutlet UILabel *vehicleNoStrlen;
 
-@interface VehicleChallanViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+@property (weak, nonatomic) IBOutlet UITextField *vehicleNo;
+- (IBAction)getChalanDetails:(id)sender;
 
+- (IBAction)editingChanged:(id)sender;
+- (IBAction)editingEnd:(id)sender;
+
+- (void)setKeyBoardType:(int)pos;
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "SupportViewController.h"
+#import "Utils.h"
+#import "SWRevealViewController.h"
 
 @interface SupportViewController ()
 
@@ -16,7 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
     // Do any additional setup after loading the view.
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"support" ofType:@"txt"];
+    NSString *content = [NSString stringWithContentsOfFile:path
+                                                  encoding:NSUTF8StringEncoding error:nil];
+    self.supportInfo.attributedText = [Utils getHtmlString:content];
 }
 
 - (void)didReceiveMemoryWarning {

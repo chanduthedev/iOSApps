@@ -1,9 +1,9 @@
 //
 //  SidebarTableViewController.m
-//  SidebarDemo
+//  TrafficBuddy
 //
-//  Created by Simon Ng on 10/11/14.
-//  Copyright (c) 2014 AppCoda. All rights reserved.
+//  Created by Chandrasekhar Pasumarthi on 21/04/16.
+//  Copyright © 2016 Testing. All rights reserved.
 //
 
 #import "SidebarTableViewController.h"
@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    menuItems = @[@"title", @"news", @"comments", @"map", @"calendar", @"wishlist", @"bookmark", @"tag"];
+    menuItems = @[@"title", @"home", @"ORR", @"map", @"calendar", @"wishlist", @"bookmark", @"tag"];
 }
 
 - (void)didReceiveMemoryWarning {

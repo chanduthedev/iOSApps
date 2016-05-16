@@ -7,6 +7,8 @@
 //
 
 #import "BoardingDetailsViewController.h"
+#import "SWRevealViewController.h"
+#import "Utils.h"
 
 @interface BoardingDetailsViewController ()
 
@@ -16,6 +18,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //[self.navigationItem setHidesBackButton:YES];
+    SWRevealViewController *revealViewController = self.revealViewController;
+    
+    self.boardingDetails.text = [NSString stringWithFormat:@"Cab boarding Time: %@\nPolice Indentificaiton NO: %@\nVehicle/DL No: %@",[Utils getCurrentTime], @"", @""];
+    if ( revealViewController )
+    {
+        [self.sideBarButton setTarget: self.revealViewController];
+        [self.sideBarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+
     // Do any additional setup after loading the view.
 }
 

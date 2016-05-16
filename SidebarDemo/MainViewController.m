@@ -1,9 +1,9 @@
 //
 //  MainViewController.m
-//  SidebarDemo
+//  TrafficBuddy
 //
-//  Created by Simon Ng on 10/11/14.
-//  Copyright (c) 2014 AppCoda. All rights reserved.
+//  Created by Chandrasekhar Pasumarthi on 21/04/16.
+//  Copyright © 2016 Testing. All rights reserved.
 //
 
 #import "MainViewController.h"
@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = @"News";
+    self.title = @"HomeView";
 
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )

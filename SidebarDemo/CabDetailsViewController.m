@@ -7,6 +7,8 @@
 //
 
 #import "CabDetailsViewController.h"
+#import "SWRevealViewController.h"
+#import "Utils.h"
 
 @interface CabDetailsViewController ()
 
@@ -16,6 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"in CabDetailsViewController detailsaare %@", _cabDetails);
+    self.cabDetailsTxtView.text = [Utils getCabDetailsToDisplay:_vehicleDetails];
+    //[self.navigationItem setHidesBackButton:YES];
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sideBarButton setTarget: self.revealViewController];
+        [self.sideBarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+
+    
     // Do any additional setup after loading the view.
 }
 
@@ -34,4 +48,7 @@
 }
 */
 
+- (IBAction)notTravelling:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 @end

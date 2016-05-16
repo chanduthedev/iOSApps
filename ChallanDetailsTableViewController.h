@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChallanDetailsTableViewController : UITableViewController
+@interface ChallanDetailsTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
+{
+    NSArray *dates;
+    NSArray *reasons;
+}
+@property (strong, nonatomic) IBOutlet UITableView *myTable;
 
 @end

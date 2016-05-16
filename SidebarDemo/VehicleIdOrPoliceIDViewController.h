@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VehicleIdOrPoliceIDViewController : UIViewController
+@interface VehicleIdOrPoliceIDViewController : UIViewController <UITextViewDelegate>
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
+@property (weak, nonatomic) IBOutlet UITextField *vehicleNo;
+@property (weak, nonatomic) IBOutlet UITextField *policeIDNo;
+@property (nonatomic, strong) NSDictionary *vehicleDetails;
+- (IBAction)getCabDetails:(id)sender;
 
 @end

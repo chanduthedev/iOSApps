@@ -8,6 +8,7 @@
 
 #import "Annotations.h"
 
-@implementation Annotations
 
+@implementation Annotations
+@synthesize psID;
 @end

@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CustomCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *incidentDate;
 
+@property (weak, nonatomic) IBOutlet UILabel *reasonForFine;
 @end

@@ -9,8 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface network : NSObject<NSURLConnectionDelegate>
-{
-    NSMutableData *_responseData;
+{    
+    id networkResponse;
 }
--(void)getChallansFortheVehicle:(NSString*)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo;
++ (id)sharedManager;
+-(NSArray *)getChallansFortheVehicle:(NSString*)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo completionHandle:(void(^)(NSArray*))handler;
+- (NSArray *)getNetworkResponseAsArray: (NSData *)receivedData;
+- (id)getNetworkResponse: (NSData *)receivedData;
+
+-(id)getCabDetails:(NSString*)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo completionHandle:(void(^)(id))handler;
+-(BOOL) isCabDetailsValid:(id)response;
+- (BOOL)isNetworkAvailable;
 @end

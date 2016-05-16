@@ -9,5 +9,7 @@
 #import "ViewController.h"
 
 @interface SupportViewController : ViewController
+@property (weak, nonatomic) IBOutlet UITextView *supportInfo;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @end

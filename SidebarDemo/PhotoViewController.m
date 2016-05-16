@@ -1,9 +1,9 @@
 //
 //  PhotoViewController.m
-//  SidebarDemo
+//  TrafficBuddy
 //
-//  Created by Simon Ng on 10/11/14.
-//  Copyright (c) 2014 AppCoda. All rights reserved.
+//  Created by Chandrasekhar Pasumarthi on 21/04/16.
+//  Copyright © 2016 Testing. All rights reserved.
 //
 
 #import "PhotoViewController.h"
@@ -20,6 +20,7 @@
     
     self.photoImageView.image = [UIImage imageNamed:self.photoFilename];
 
+    NSLog(@"In photo view controller");
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {

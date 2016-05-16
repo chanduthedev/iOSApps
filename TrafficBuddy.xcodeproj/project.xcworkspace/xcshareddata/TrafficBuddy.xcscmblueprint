@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "085D060F2E1C62543CBEADA4C3B82E141B5F4D11",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "085D060F2E1C62543CBEADA4C3B82E141B5F4D11" : 0,
+    "DA2A78629CF7C407F6C978E08DF52DC0B455A391" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D717D464-FABC-4030-B280-BBC7A4DA6D73",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "085D060F2E1C62543CBEADA4C3B82E141B5F4D11" : "Slideout-Sidebar-Demo\/",
+    "DA2A78629CF7C407F6C978E08DF52DC0B455A391" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TrafficBuddy",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TrafficBuddy.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "085D060F2E1C62543CBEADA4C3B82E141B5F4D11"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/bitbucket.org\/eminosoft\/iosapps.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA2A78629CF7C407F6C978E08DF52DC0B455A391"
+    }
+  ]
+}

@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface KnowYourCabViewController : UIViewController
+@interface KnowYourCabViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate>
+@property (nonatomic, strong) AVCaptureSession *captureSession;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
+
+@property (nonatomic) BOOL isReading;
+@property (weak, nonatomic) IBOutlet UIView *viewPreview;
+-(BOOL)startReading;
+-(BOOL)stopReading;
+
 
 @end
