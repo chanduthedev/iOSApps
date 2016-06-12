@@ -32,6 +32,7 @@
 
 +(NSArray *)getPSGeoDetails{
     
+    // sample ['ALWL','Alwal Police Station',17.5036111111111,78.5116666666667,'C']
     NSString *path = [[NSBundle mainBundle] pathForResource:@"psGeoCSV" ofType:@"txt"];
     NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSMutableArray *entries = [[NSMutableArray alloc] init];
@@ -46,6 +47,7 @@
         myAnn.title = [rows objectAtIndex:1];
         //myAnn.subtitle = [rows objectAtIndex:0];
         myAnn.psID = [rows objectAtIndex:0];
+        myAnn.psIDType = [rows objectAtIndex:4];
         
         [entries addObject:myAnn];
     }
@@ -118,7 +120,7 @@
     id ratings = [vehicleDetails objectForKey:@"ratings"];
     NSString *avgRating = [ratings objectForKey:@"avg_rating"];
     NSLog(@"avgRating  %@", avgRating);
-    return [NSString stringWithFormat:@"Police ID No    :	%@\nOwner Name		:	%@\nVehicle No		:	%@\nOwner Contact	:	%@\nVehicle Make    :	%@\nVehicle Color	:	%@\nVehicle MFR		:	%@\nVehicle Permit	:	%@\nPermit Validity	:	%@\nVehicle Fitness	:	%@\nFitness Validity    :	%@\n", [cabDetails objectForKey:@"prnumber"],
+    return [NSString stringWithFormat:@"Police ID No         :	%@\nOwner Name		:	%@\nVehicle No		:	%@\nOwner Contact	:	%@\nVehicle Make       :	%@\nVehicle Color	:	%@\nVehicle MFR		:	%@\nVehicle Permit	:	%@\nPermit Validity	:	%@\nVehicle Fitness	:	%@\nFitness Validity    :	%@\n", [cabDetails objectForKey:@"prnumber"],
             [cabDetails objectForKey:@"ownername"],
             [cabDetails objectForKey:@"rtanumber"],
             [cabDetails objectForKey:@"ownercontactnumber"],

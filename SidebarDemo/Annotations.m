@@ -10,5 +10,5 @@
 
 
 @implementation Annotations
-@synthesize psID;
+@synthesize psID, psIDType;
 @end

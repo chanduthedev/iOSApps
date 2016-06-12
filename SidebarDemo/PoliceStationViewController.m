@@ -51,38 +51,16 @@
     CLLocationCoordinate2D center;
     center.latitude = 17.4503238;
     center.longitude =78.3654599;
-//    MKCoordinateSpan span;
-//    span.latitudeDelta = 0.10f;
-//    span.longitudeDelta = 0.10f;
     
     myRegion.center = center;
     //myRegion.span = span;
     
-    Annotations *myAnn = [[Annotations alloc] init];
-    myAnn.coordinate = center;
-    myAnn.title = @"alwal";
-//    myAnn.subtitle = @"SubTesting";
-    
-    
-    CLLocationCoordinate2D center1;
-    center1.latitude = 17.4499221;
-    center1.longitude =78.3658576;
-    Annotations *myAnn1 = [[Annotations alloc] init];
-    myAnn1.coordinate = center1;
-    myAnn1.title = @"abids";
-    myAnn.subtitle = @"Testing";
-    myAnn.psID = @"teting";
-//    myAnn1.subtitle = @"SubTesting1";
     
     MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(center, 2000, 2000)];
     [self.mapView setRegion:adjustedRegion animated:YES];
-    NSArray *annotations = [[NSArray alloc] initWithObjects:myAnn,myAnn1, nil];
-    
+
     NSArray *annotationsData =  [Utils getPSGeoDetails];
     [self.mapView addAnnotations:annotationsData];
-    //[self.mapView addAnnotation:myAnn];
-    //[locationManager startUpdatingLocation];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,6 +91,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"in didUpdateToLocation  ");
 //    NSLog(@"didUpdateToLocation: %@", newLocation);
 //    CLLocation *currentLocation = newLocation;
 //    
@@ -158,17 +137,21 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     
     Annotations *dmAnn = (Annotations *)view.annotation;
-    NSString *str = dmAnn.psID;
+    NSString *psID = dmAnn.psID;
     
-    NSLog(@"psID is %@", str);
+    //NSLog(@"psID is %@", psID);
 
-    NSString *name = [str stringByReplacingOccurrencesOfString:@"'" withString:@""];
+    NSString *name = [psID stringByReplacingOccurrencesOfString:@"'" withString:@""];
     
-    NSString *psName = [view.annotation title];
-    NSLog(@"PS name is %@ \n psid is %@",psName,dmAnn.psID);
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"txt"];
+    NSError *error;
+//    NSString *content = [NSString stringWithContentsOfFile:path
+//                                  encoding:NSUTF8StringEncoding error:&error];
+//    
     NSString *content = [NSString stringWithContentsOfFile:path
-                                  encoding:NSUTF8StringEncoding error:nil];
+                                                  encoding:NSMacOSRomanStringEncoding error:&error];
+    
+    NSLog(@"Error is %@", error);
     
     NSAttributedString *attributedString = [[NSAttributedString alloc]
                                             initWithData: [content dataUsingEncoding:NSUnicodeStringEncoding]
@@ -183,13 +166,32 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    NSLog(@"in viewForAnnotation");
     // If it's the user location, just return nil.
     if ([annotation isKindOfClass:[MKUserLocation class]])
     {
         NSLog(@"annotation is  MKUserLocation class");
         return nil;
     }
+    
+    MKAnnotationView *annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:@"test"];
+    //If one isn't available, create a new one
+    if(!annotationView){
+        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"test"];
+        annotationView.annotation = annotation;
+        //[string rangeOfString:@"bla"].location == NSNotFound
+        NSString *title = [((Annotations *)annotation) title];
+        if([title rangeOfString:@"Traffic" ].location != NSNotFound){
+            annotationView.image=[UIImage imageNamed:@"tps.png"];
+        } else {
+            annotationView.image=[UIImage imageNamed:@"ps.png"];
+        }
+        NSLog(@"Ttile is %@", [annotationView.annotation title]);
+        
+        //annotationView.image=[UIImage imageNamed:@"ps.png"];
+        
+        return annotationView;
+    }
+
     
     // Handle any custom annotations.
     if ([annotation isKindOfClass:[MKPointAnnotation class]])
@@ -199,10 +201,11 @@
         MKAnnotationView *pinView = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Annotations"];
         if (!pinView)
         {
+            NSLog(@"not using dequeue!!");
             // If an existing pin view was not available, create one.
             pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Annotations"];
             pinView.canShowCallout = YES;
-           // pinView.image = [UIImage imageNamed:@"pizza_slice_32.png"];
+           pinView.image = [UIImage imageNamed:@"ps.png"];
             pinView.calloutOffset = CGPointMake(0, 32);
             
             // Add a detail disclosure button to the callout.
@@ -217,7 +220,10 @@
         }
         return pinView;
     }
-    NSLog(@"leaving viewForAnnotation");
+    
+    
+    
+    //NSLog(@"leaving viewForAnnotation");
     return nil;
 }
 @end

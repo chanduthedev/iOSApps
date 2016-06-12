@@ -36,7 +36,7 @@
 - (void)testExample {
     network *instance = [network sharedManager];
     
-    NSArray *result = [instance getCabDetails:@"http://police.nayalabs.com/api/cab_registrations/get_vehicle_details_by_vehicle_no" vehicleN:@"AP09TVA1213" deviceNo:@"123" imeiNo:@"123" completionHandle:^(NSArray * response){
+    NSArray *result = [instance getCabDetails:@"http://police.nayalabs.com/api/cab_registrations/get_vehicle_details_by_vehicle_no" vehicleN:@"AP09TVA1213" policeID:@"" deviceNo:@"123" imeiNo:@"123" completionHandle:^(NSArray * response){
         NSLog(@"reponse is %@", response);
     }];
     

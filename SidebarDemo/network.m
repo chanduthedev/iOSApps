@@ -105,14 +105,14 @@
     //    NSLog(@"error is %@",error);
 }
 
-- (NSMutableURLRequest *)createPostRequest:(NSString *)url vehicleNo:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNO
+- (NSMutableURLRequest *)createPostRequest:(NSString *)url vehicleNo:(NSString *)vehicleNo policeID:(NSString *)pID deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNO
 {
     NSLog(@"In createPostRequest");
     // Create the request.
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [request setHTTPMethod:@"POST"];
-    NSString *post = [NSString stringWithFormat:@"vehicle_no=%@&device_no=%@&imei_no=%@",vehicleNo, deviceNo, imeiNO];
+    NSString *post = [NSString stringWithFormat:@"vehicle_no=%@&police_id_no=%@&device_no=%@&imei_no=%@",vehicleNo, pID, deviceNo, imeiNO];
     
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -121,10 +121,10 @@
     return request;
 }
 
--(id)getCabDetails:(NSString *)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString *)deviceNo imeiNo:(NSString *)imeiNo completionHandle:(void (^)(id))handler{
+-(id)getCabDetails:(NSString *)url vehicleN:(NSString *)vehicleNo policeID:(NSString *)pID deviceNo:(NSString *)deviceNo imeiNo:(NSString *)imeiNo completionHandle:(void (^)(id))handler{
     
     NSLog(@"in getChallansFortheVehicle");
-    NSMutableURLRequest *request = [self createPostRequest:url vehicleNo:vehicleNo deviceNo:deviceNo imeiNo:imeiNo];
+    NSMutableURLRequest *request = [self createPostRequest:url vehicleNo:vehicleNo policeID:pID deviceNo:deviceNo imeiNo:imeiNo];
     
     // Create url connection and fire request
     //    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -150,7 +150,7 @@
 -(NSArray *)getChallansFortheVehicle:(NSString*)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo completionHandle:(void(^)(NSArray*))handler
 {
     NSLog(@"in getChallansFortheVehicle");
-    NSMutableURLRequest *request = [self createPostRequest:url vehicleNo:vehicleNo deviceNo:deviceNo imeiNo:imeiNo];
+    NSMutableURLRequest *request = [self createPostRequest:url vehicleNo:vehicleNo policeID:@"C8387" deviceNo:deviceNo imeiNo:imeiNo];
     
     // Create url connection and fire request
 //    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];

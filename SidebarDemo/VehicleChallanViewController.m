@@ -22,6 +22,11 @@
     self.vehicleNo.delegate = self;
     nw = [[network alloc] init];
     
+    NSString *fullURL = @"https://www.echallan.org/publicview/";
+    NSURL *url = [NSURL URLWithString:fullURL];
+    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    [_webView loadRequest:requestObj];
+    
     
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )

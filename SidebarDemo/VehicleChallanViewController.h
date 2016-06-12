@@ -21,6 +21,7 @@
 
 - (IBAction)editingChanged:(id)sender;
 - (IBAction)editingEnd:(id)sender;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 - (void)setKeyBoardType:(int)pos;
 @end

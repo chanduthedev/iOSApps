@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    menuItems = @[@"title", @"home", @"ORR", @"map", @"calendar", @"wishlist", @"bookmark", @"tag"];
+    menuItems = @[@"title", @"home", @"ORR", @"support", @"securityCell"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,7 +65,7 @@
         UINavigationController *navController = segue.destinationViewController;
         PhotoViewController *photoController = [navController childViewControllers].firstObject;
         NSString *photoFilename = [NSString stringWithFormat:@"%@_photo", [menuItems objectAtIndex:indexPath.row]];
-        photoController.photoFilename = photoFilename;
+        //photoController.photoFilename = photoFilename;
     }
 }
 

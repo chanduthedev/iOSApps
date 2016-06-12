@@ -17,7 +17,7 @@
 - (NSArray *)getNetworkResponseAsArray: (NSData *)receivedData;
 - (id)getNetworkResponse: (NSData *)receivedData;
 
--(id)getCabDetails:(NSString*)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo completionHandle:(void(^)(id))handler;
+-(id)getCabDetails:(NSString*)url vehicleN:(NSString *)vehicleNo policeID:(NSString *)pID deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo completionHandle:(void(^)(id))handler;
 -(BOOL) isCabDetailsValid:(id)response;
 - (BOOL)isNetworkAvailable;
 @end

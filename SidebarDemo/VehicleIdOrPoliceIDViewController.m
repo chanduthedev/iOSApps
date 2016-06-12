@@ -12,6 +12,10 @@
 #import "Utils.h"
 #import "CabDetailsViewController.h"
 
+#define VEHICLE_URL @"http://police.nayalabs.com/api/cab_registrations/get_vehicle_details_by_vehicle_no"
+#define POLICEID_URL @"http://police.nayalabs.com/api/cab_registrations/get_vehicle_details_by_police_id_no"
+
+
 @interface VehicleIdOrPoliceIDViewController ()
 
 @end
@@ -73,13 +77,16 @@
         return;
     }
     NSString *inputStr;
+    NSString *url;
     if(![Utils isEmptyString:self.vehicleNo.text]){
         inputStr = self.policeIDNo.text;
+        url = POLICEID_URL;
     }else{
         inputStr = self.vehicleNo.text;
+        url = VEHICLE_URL;
     }
     
-    self.vehicleDetails = [instance getCabDetails:@"http://police.nayalabs.com/api/cab_registrations/get_vehicle_details_by_vehicle_no" vehicleN:inputStr deviceNo:@"testing" imeiNo:@"testing" completionHandle:^(id response){
+    self.vehicleDetails = [instance getCabDetails:url vehicleN:inputStr policeID:inputStr deviceNo:@"testing" imeiNo:@"testing" completionHandle:^(id response){
         NSLog(@"reponse is %@", response);
                 if([instance isCabDetailsValid:response]){
                     NSLog(@"navigating 2 cabDetailView");

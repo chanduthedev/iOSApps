@@ -96,7 +96,7 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     
     //[Utils checkVehiclNoNPoliceID:@"tn09bh7105" policeID:@""];
-    XCTAssertEqual(false, [Utils checkVehiclNoNPoliceID:@"testing" policeID:@"testing"]);
+    XCTAssertEqual(false, [Utils checkVehiclNoNPoliceID:@"testing" policeID:@"test"]);
     
     
 }
@@ -126,7 +126,7 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     
     //[Utils checkVehiclNoNPoliceID:@"tn09bh7105" policeID:@""];
-    XCTAssertEqual(false, [Utils checkVehiclNoNPoliceID:@"" policeID:@"testing"]);
+    XCTAssertEqual(false, [Utils checkVehiclNoNPoliceID:@"" policeID:@"test"]);
     
     
 }
