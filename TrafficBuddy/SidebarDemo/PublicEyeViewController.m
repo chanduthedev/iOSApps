@@ -9,6 +9,12 @@
 #import "PublicEyeViewController.h"
 #import "SWRevealViewController.h"
 #import "Utils.h"
+#import <AWSCore/AWSCore.h>
+#import <AWSS3/AWSS3.h>
+#import <AWSDynamoDB/AWSDynamoDB.h>
+#import <AWSSQS/AWSSQS.h>
+#import <AWSSNS/AWSSNS.h>
+#import <AWSCognito/AWSCognito.h>
 
 @interface PublicEyeViewController ()
 
@@ -202,6 +208,38 @@
 
 - (IBAction)submitIncident:(id)sender {
     
+    
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = @"yourBucket";
+    uploadRequest.key = @"yourKey";
+    //uploadRequest.body = @"yourDataURL";
+    
+    [[transferManager upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                       withBlock:^id(AWSTask *task) {
+                                                           if (task.error) {
+                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                   switch (task.error.code) {
+                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                           break;
+                                                                           
+                                                                       default:
+                                                                           NSLog(@"Error: %@", task.error);
+                                                                           break;
+                                                                   }
+                                                               } else {
+                                                                   // Unknown error.
+                                                                   NSLog(@"Error: %@", task.error);
+                                                               }
+                                                           }
+                                                           
+                                                           if (task.result) {
+                                                               AWSS3TransferManagerUploadOutput *uploadOutput = task.result;
+                                                               // The file uploaded successfully.
+                                                           }
+                                                           return nil;
+                                                       }];
     NSLog(@"Submitted successfully!! %@", _selectedImage.debugDescription);
     [Utils displayAlert:@"Image Upload success" displayText:@"Congratulations!!"];
     [self.navigationController popToRootViewControllerAnimated:YES];
