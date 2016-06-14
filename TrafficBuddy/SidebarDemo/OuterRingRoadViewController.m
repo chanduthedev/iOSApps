@@ -8,6 +8,7 @@
 
 #import "OuterRingRoadViewController.h"
 #import "SWRevealViewController.h"
+#import "Utils.h"
 
 @interface OuterRingRoadViewController ()
 
@@ -24,6 +25,16 @@
         [self.sidebarButton setAction: @selector( revealToggle: )];
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"outerringroadhelpline" ofType:@"txt"];
+    NSString *content = [NSString stringWithContentsOfFile:path
+                                                  encoding:NSUTF8StringEncoding error:nil];
+    self.orrHelpLine.attributedText = [Utils getHtmlString:content];
+    
+    NSString *path1 = [[NSBundle mainBundle] pathForResource:@"outerringroad" ofType:@"txt"];
+    NSString *content1 = [NSString stringWithContentsOfFile:path1
+                                                  encoding:NSUTF8StringEncoding error:nil];
+    self.orrInfo.attributedText = [Utils getHtmlString:content1];
     // Do any additional setup after loading the view.
 }
 

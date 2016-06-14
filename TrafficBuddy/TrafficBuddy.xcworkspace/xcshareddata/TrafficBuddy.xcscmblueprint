@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "085D060F2E1C62543CBEADA4C3B82E141B5F4D11",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "085D060F2E1C62543CBEADA4C3B82E141B5F4D11" : 0,
+    "A711E2E320D4A1FB95B958E33A7E76CE172384F6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C23319E7-82F4-48F5-A9AB-A540FE6D0E3C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "085D060F2E1C62543CBEADA4C3B82E141B5F4D11" : "iOSApps\/",
+    "A711E2E320D4A1FB95B958E33A7E76CE172384F6" : ".."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TrafficBuddy",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TrafficBuddy\/TrafficBuddy.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/chanduthedev\/iOSApps.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "085D060F2E1C62543CBEADA4C3B82E141B5F4D11"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/chanduthedev\/iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A711E2E320D4A1FB95B958E33A7E76CE172384F6"
+    }
+  ]
+}

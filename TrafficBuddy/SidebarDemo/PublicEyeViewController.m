@@ -158,24 +158,19 @@
     picker.allowsEditing = YES;
     
     
-    UIAlertController * view=   [UIAlertController
-                                 alertControllerWithTitle:@"My Title"
-                                 message:@"Select you Choice"
+    UIAlertController * view=   [UIAlertController alertControllerWithTitle:@"Select you Choice" message:@""
                                  preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction* ok = [UIAlertAction
-                         actionWithTitle:@"Camera"
-                         style:UIAlertActionStyleDefault
+    UIAlertAction* camera = [UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault
                          handler:^(UIAlertAction * action)
                          {
                              NSLog(@"Clicked camera option");
-                             //picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                             //[self presentViewController:picker animated:YES completion:NULL];
+                             picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                             [self presentViewController:picker animated:YES completion:NULL];
                              
                          }];
-    UIAlertAction* cancel = [UIAlertAction
-                             actionWithTitle:@"Gallery"
-                             style:UIAlertActionStyleDefault
+    
+    UIAlertAction* gallery = [UIAlertAction actionWithTitle:@"Gallery" style:UIAlertActionStyleDefault
                              handler:^(UIAlertAction * action)
                              {
                                  NSLog(@"Clicked gallery option");
@@ -187,8 +182,18 @@
                                  
                              }];
     
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action)
+                             {
+                                 NSLog(@"Clicked camera option");
+                                [self dismissViewControllerAnimated:YES completion:^{
+                                                                     //nothing
+                                }];
+                             }];
     
-    [view addAction:ok];
+    
+    [view addAction:camera];
+    [view addAction:gallery];
     [view addAction:cancel];
     [self presentViewController:view animated:YES completion:nil];
     NSLog(@"leaving upLoadImage");

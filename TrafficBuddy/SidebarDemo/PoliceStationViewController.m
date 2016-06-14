@@ -46,19 +46,15 @@
         [locationManager requestWhenInUseAuthorization];
     }
     
+    [locationManager startUpdatingLocation];
     
-    MKCoordinateRegion myRegion;
-    CLLocationCoordinate2D center;
-    center.latitude = 17.4503238;
-    center.longitude =78.3654599;
+    //MKCoordinateRegion myRegion;
     
-    myRegion.center = center;
+    //myRegion.center = center;
     //myRegion.span = span;
     
     
-    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(center, 2000, 2000)];
-    [self.mapView setRegion:adjustedRegion animated:YES];
-
+    
     NSArray *annotationsData =  [Utils getPSGeoDetails];
     [self.mapView addAnnotations:annotationsData];
 }
@@ -92,6 +88,18 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     NSLog(@"in didUpdateToLocation  ");
+    CLLocation *currentLocation = newLocation;
+    
+    CLLocationCoordinate2D center;
+    if (currentLocation != nil) {
+        center.latitude = currentLocation.coordinate.latitude;
+        center.longitude =currentLocation.coordinate.longitude;
+    }
+    
+    
+    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(center, 2000, 2000)];
+    [self.mapView setRegion:adjustedRegion animated:YES];
+
 //    NSLog(@"didUpdateToLocation: %@", newLocation);
 //    CLLocation *currentLocation = newLocation;
 //    

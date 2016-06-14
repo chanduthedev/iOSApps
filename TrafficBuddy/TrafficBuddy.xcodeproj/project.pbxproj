@@ -23,6 +23,9 @@
 		758D74AF1CC94A3B0050F6B4 /* ChallanDetailsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 758D74AE1CC94A3B0050F6B4 /* ChallanDetailsTableViewController.m */; };
 		758D74B11CCA612A0050F6B4 /* abids.txt in Resources */ = {isa = PBXBuildFile; fileRef = 758D74B01CCA612A0050F6B4 /* abids.txt */; };
 		758D74B31CCA613F0050F6B4 /* alwal.txt in Resources */ = {isa = PBXBuildFile; fileRef = 758D74B21CCA613F0050F6B4 /* alwal.txt */; };
+		7592F3271D0F18D5009150E2 /* outerringroad.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7592F3251D0F18D5009150E2 /* outerringroad.txt */; };
+		7592F3281D0F18D5009150E2 /* outerringroadhelpline.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7592F3261D0F18D5009150E2 /* outerringroadhelpline.txt */; };
+		7592F32A1D0F1F79009150E2 /* orr.png in Resources */ = {isa = PBXBuildFile; fileRef = 7592F3291D0F1F79009150E2 /* orr.png */; };
 		75935D581CEC067B00984D27 /* PublicEyeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75935D571CEC067B00984D27 /* PublicEyeViewController.m */; };
 		75935D591CEC067B00984D27 /* PublicEyeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75935D571CEC067B00984D27 /* PublicEyeViewController.m */; };
 		75935DB61CECBB8A00984D27 /* AccountKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75935DB41CECBB8A00984D27 /* AccountKit.framework */; };
@@ -179,7 +182,6 @@
 		75D0C0271CF1511600517B9F /* ps.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D0C0241CF1511600517B9F /* ps.png */; };
 		75D0C0281CF1511600517B9F /* tps.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D0C0251CF1511600517B9F /* tps.png */; };
 		75D0C0291CF1511600517B9F /* wps.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D0C0261CF1511600517B9F /* wps.png */; };
-		75D0C02F1CF2ABC600517B9F /* ORR.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D0C02C1CF2ABC600517B9F /* ORR.png */; };
 		75D0C0301CF2ABC600517B9F /* securityCouncil.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D0C02D1CF2ABC600517B9F /* securityCouncil.png */; };
 		75D0C0311CF2ABC600517B9F /* support.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D0C02E1CF2ABC600517B9F /* support.png */; };
 		75DC3D9D1CD22CC000AAE129 /* TestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DC3D9C1CD22CC000AAE129 /* TestingViewController.m */; };
@@ -241,6 +243,9 @@
 		758D74AE1CC94A3B0050F6B4 /* ChallanDetailsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChallanDetailsTableViewController.m; path = ../ChallanDetailsTableViewController.m; sourceTree = "<group>"; };
 		758D74B01CCA612A0050F6B4 /* abids.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = abids.txt; path = SidebarDemo/abids.txt; sourceTree = "<group>"; };
 		758D74B21CCA613F0050F6B4 /* alwal.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = alwal.txt; path = SidebarDemo/alwal.txt; sourceTree = "<group>"; };
+		7592F3251D0F18D5009150E2 /* outerringroad.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outerringroad.txt; sourceTree = "<group>"; };
+		7592F3261D0F18D5009150E2 /* outerringroadhelpline.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = outerringroadhelpline.txt; sourceTree = "<group>"; };
+		7592F3291D0F1F79009150E2 /* orr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orr.png; sourceTree = "<group>"; };
 		75935D561CEC067B00984D27 /* PublicEyeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicEyeViewController.h; sourceTree = "<group>"; };
 		75935D571CEC067B00984D27 /* PublicEyeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicEyeViewController.m; sourceTree = "<group>"; };
 		75935DB41CECBB8A00984D27 /* AccountKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AccountKit.framework; sourceTree = "<group>"; };
@@ -395,7 +400,6 @@
 		75D0C0241CF1511600517B9F /* ps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ps.png; sourceTree = "<group>"; };
 		75D0C0251CF1511600517B9F /* tps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tps.png; sourceTree = "<group>"; };
 		75D0C0261CF1511600517B9F /* wps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wps.png; sourceTree = "<group>"; };
-		75D0C02C1CF2ABC600517B9F /* ORR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ORR.png; sourceTree = "<group>"; };
 		75D0C02D1CF2ABC600517B9F /* securityCouncil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = securityCouncil.png; sourceTree = "<group>"; };
 		75D0C02E1CF2ABC600517B9F /* support.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = support.png; sourceTree = "<group>"; };
 		75DC3D9B1CD22CC000AAE129 /* TestingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingViewController.h; sourceTree = "<group>"; };
@@ -482,6 +486,8 @@
 		758D74B41CCA67320050F6B4 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				7592F3251D0F18D5009150E2 /* outerringroad.txt */,
+				7592F3261D0F18D5009150E2 /* outerringroadhelpline.txt */,
 				75A9DADB1CE7488900E91D06 /* PS */,
 				758D74B01CCA612A0050F6B4 /* abids.txt */,
 				75A9DAD71CE42AA100E91D06 /* support.txt */,
@@ -637,9 +643,9 @@
 				75D0C0241CF1511600517B9F /* ps.png */,
 				75D0C0251CF1511600517B9F /* tps.png */,
 				75D0C0261CF1511600517B9F /* wps.png */,
+				7592F3291D0F1F79009150E2 /* orr.png */,
 				75D0C0181CF14A5700517B9F /* AppIcon-60.png */,
 				75D0C0191CF14A5700517B9F /* EChallanIcon-60.png */,
-				75D0C02C1CF2ABC600517B9F /* ORR.png */,
 				75D0C02D1CF2ABC600517B9F /* securityCouncil.png */,
 				75D0C02E1CF2ABC600517B9F /* support.png */,
 				75D0C01A1CF14A5700517B9F /* NotificaionsIcon-60.png */,
@@ -934,10 +940,13 @@
 				75A9DB441CE748A500E91D06 /* ASIF.txt in Resources */,
 				75A9DB641CE748A500E91D06 /* KACH.txt in Resources */,
 				75D0C01F1CF14A5700517B9F /* EChallanIcon-60.png in Resources */,
+				7592F3271D0F18D5009150E2 /* outerringroad.txt in Resources */,
 				75A9DB941CE748A500E91D06 /* SFBD.txt in Resources */,
+				7592F3281D0F18D5009150E2 /* outerringroadhelpline.txt in Resources */,
 				F4090BA21A0F67D000651F6F /* LaunchScreen.xib in Resources */,
 				75A9DB6C1CE748A500E91D06 /* KSPU.txt in Resources */,
 				75A9DBE31CE748BF00E91D06 /* WPSZ.txt in Resources */,
+				7592F32A1D0F1F79009150E2 /* orr.png in Resources */,
 				75A9DB521CE748A500E91D06 /* CHPL.txt in Resources */,
 				75A9DB6A1CE748A500E91D06 /* KRKA.txt in Resources */,
 				75A9DB7D1CE748A500E91D06 /* MRCH.txt in Resources */,
@@ -974,7 +983,6 @@
 				75A9DB501CE748A500E91D06 /* CHLG.txt in Resources */,
 				75A9DB921CE748A500E91D06 /* RJNR.txt in Resources */,
 				75A9DB991CE748A500E91D06 /* SNTR.txt in Resources */,
-				75D0C02F1CF2ABC600517B9F /* ORR.png in Resources */,
 				75D0C0221CF14A5700517B9F /* PublicEyeIcon-60.png in Resources */,
 				75A9DB541CE748A500E91D06 /* CTNA.txt in Resources */,
 				75A9DB891CE748A500E91D06 /* NYGU.txt in Resources */,
