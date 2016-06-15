@@ -7,6 +7,7 @@
 //
 
 #import "network.h"
+#import "Utils.h"
 
 #define SERVICE_URL @"http://police.nayalabs.com/api/testchallanwebservice.php"
 @implementation network
@@ -89,7 +90,6 @@
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
     
-    //NSLog(@"testing --- 3");
     networkResponse = [self parseNetworkResponse];
     NSLog(@"Network response is %@", networkResponse);
     
@@ -99,20 +99,19 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     // The request has failed for some reason!
     // Check the error var
-    //NSLog(@"testing --- 4 %@",error);
     networkResponse = (NSDictionary *)error;
-    NSLog(@"testing --- 4 %@",networkResponse);    
-    //    NSLog(@"error is %@",error);
+    NSLog(@"in didFailWithError error is %@",error);
 }
 
-- (NSMutableURLRequest *)createPostRequest:(NSString *)url vehicleNo:(NSString *)vehicleNo policeID:(NSString *)pID deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNO
+
+- (NSMutableURLRequest *)createPostRequest:(NSString *)url params:(NSDictionary *)params
 {
     NSLog(@"In createPostRequest");
+    NSString *post = [Utils getParameterisedStr:params];
     // Create the request.
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [request setHTTPMethod:@"POST"];
-    NSString *post = [NSString stringWithFormat:@"vehicle_no=%@&police_id_no=%@&device_no=%@&imei_no=%@",vehicleNo, pID, deviceNo, imeiNO];
     
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -121,13 +120,12 @@
     return request;
 }
 
--(id)getCabDetails:(NSString *)url vehicleN:(NSString *)vehicleNo policeID:(NSString *)pID deviceNo:(NSString *)deviceNo imeiNo:(NSString *)imeiNo completionHandle:(void (^)(id))handler{
+
+
+-(id)getCabDetails:(NSString *)url params:(NSDictionary *)params completionHandle:(void (^)(id))handler{
     
     NSLog(@"in getChallansFortheVehicle");
-    NSMutableURLRequest *request = [self createPostRequest:url vehicleNo:vehicleNo policeID:pID deviceNo:deviceNo imeiNo:imeiNo];
-    
-    // Create url connection and fire request
-    //    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSMutableURLRequest *request = [self createPostRequest:url params:params];
     
     NSLog(@"request.URL is %@", request.URL);
     [NSURLConnection sendAsynchronousRequest:request
@@ -146,30 +144,6 @@
     NSLog(@"leaving getChallansFortheVehicle %@", networkResponse);
     return networkResponse;
     
-}
--(NSArray *)getChallansFortheVehicle:(NSString*)url vehicleN:(NSString *)vehicleNo deviceNo:(NSString*)deviceNo imeiNo:(NSString*)imeiNo completionHandle:(void(^)(NSArray*))handler
-{
-    NSLog(@"in getChallansFortheVehicle");
-    NSMutableURLRequest *request = [self createPostRequest:url vehicleNo:vehicleNo policeID:@"C8387" deviceNo:deviceNo imeiNo:imeiNo];
-    
-    // Create url connection and fire request
-//    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if(data !=nil){
-                               networkResponse =[self getNetworkResponse:data];
-                                   handler(networkResponse);
-//                               NSLog(@"Async call response is %@",networkResponse);
-//                               NSLog(@"total chalans %lu",(unsigned long)[networkResponse count]);
-                               }
-                               else{
-                               NSLog(@"Response is nil");    
-                               }
-                           }];
-    NSLog(@"leaving getChallansFortheVehicle");
-    return networkResponse;
 }
 
 - (BOOL)isNetworkAvailable
@@ -200,10 +174,8 @@
     NSString *errMessage = [response objectForKey:@"message"];
     NSLog(@"In isCabDetailsValid error is %@", [response objectForKey:@"error"]);
     if (errMessage ) {
-        NSLog(@"returning false");
         return false;
     }
-    NSLog(@"returning true");
     return true;
 }
 @end

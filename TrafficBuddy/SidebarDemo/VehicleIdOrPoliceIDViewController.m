@@ -85,8 +85,13 @@
         inputStr = self.vehicleNo.text;
         url = VEHICLE_URL;
     }
-    
-    self.vehicleDetails = [instance getCabDetails:url vehicleN:inputStr policeID:inputStr deviceNo:@"testing" imeiNo:@"testing" completionHandle:^(id response){
+    NSMutableDictionary *params =[[NSMutableDictionary alloc] init];
+    //@"vehicle_no=%@&police_id_no=%@&device_no=%@&imei_no=%@"
+    params[@"vehicle_no"]=inputStr;
+    params[@"police_id_no"]=inputStr;
+    params[@"device_no"]=@"testing";
+    params[@"imei_no"]=@"testing";
+    self.vehicleDetails = [instance getCabDetails:url params:params completionHandle:^(id response){
         NSLog(@"reponse is %@", response);
                 if([instance isCabDetailsValid:response]){
                     NSLog(@"navigating 2 cabDetailView");

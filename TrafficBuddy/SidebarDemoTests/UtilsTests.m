@@ -145,5 +145,21 @@
     NSLog(@"time is is %@", [Utils getCurrentTime]);
 }
 
+-(void)testgetParameterisedStrShouldReturnParameterisedStr{
+    NSDictionary * dict = [NSDictionary
+                           dictionaryWithObjects:@[@"king",@"33",@"India",@"India"]
+                           forKeys:@[@"name",@"age",@"location",@"country"]];
+    NSString *expected = @"name=king&age=33&country=India&location=India";
+    XCTAssertEqualObjects(expected, [Utils getParameterisedStr:dict]);
+}
+
+-(void)testgetParameterisedStrShouldReturnEmptyStrIfEmptyDict{
+    NSDictionary * dict = [[NSDictionary alloc]init];
+                           
+    NSString *expected = @"";
+    
+    XCTAssertEqualObjects(expected, [Utils getParameterisedStr:dict]);
+}
+
 
 @end

@@ -21,4 +21,5 @@
 +(void) displayAlert:(NSString *) title displayText:(NSString *)text;
 +(NSString*) getCabDetailsToDisplay:(NSDictionary*)vehicleDetails;
 +(NSString *)getCurrentTime;
++(NSString*) getParameterisedStr:(NSDictionary*)params;
 @end

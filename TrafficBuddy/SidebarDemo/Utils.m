@@ -140,4 +140,17 @@
     NSString    *strTime = [objDateformat stringFromDate:[NSDate date]];
     return strTime;
 }
+
++(NSString*) getParameterisedStr:(NSDictionary*)params{
+    NSMutableString *paramsStr = [[NSMutableString alloc] init];
+    for(id key in params){
+        //NSLog(@"%@=%@", key, [params objectForKey:key]);
+        NSLog(@"paramsStr is %@",paramsStr);
+        paramsStr = (NSMutableString*)[paramsStr stringByAppendingFormat:@"%@=%@&",key, [params objectForKey:key]];
+    }
+    if ([paramsStr length]){
+        return [paramsStr substringToIndex:[paramsStr length]-1];
+    }
+    return @"";
+}
 @end

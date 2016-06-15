@@ -181,24 +181,24 @@
         return nil;
     }
     
-    MKAnnotationView *annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:@"test"];
-    //If one isn't available, create a new one
-    if(!annotationView){
-        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"test"];
-        annotationView.annotation = annotation;
-        //[string rangeOfString:@"bla"].location == NSNotFound
-        NSString *title = [((Annotations *)annotation) title];
-        if([title rangeOfString:@"Traffic" ].location != NSNotFound){
-            annotationView.image=[UIImage imageNamed:@"tps.png"];
-        } else {
-            annotationView.image=[UIImage imageNamed:@"ps.png"];
-        }
-        NSLog(@"Ttile is %@", [annotationView.annotation title]);
-        
-        //annotationView.image=[UIImage imageNamed:@"ps.png"];
-        
-        return annotationView;
-    }
+//    MKAnnotationView *annotationView=[mapView dequeueReusableAnnotationViewWithIdentifier:@"test"];
+//    //If one isn't available, create a new one
+//    if(!annotationView){
+//        annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"test"];
+//        annotationView.annotation = annotation;
+//        //[string rangeOfString:@"bla"].location == NSNotFound
+//        NSString *title = [((Annotations *)annotation) title];
+//        if([title rangeOfString:@"Traffic" ].location != NSNotFound){
+//            annotationView.image=[UIImage imageNamed:@"tps.png"];
+//        } else {
+//            annotationView.image=[UIImage imageNamed:@"ps.png"];
+//        }
+//        NSLog(@"Ttile is %@", [annotationView.annotation title]);
+//        
+//        //annotationView.image=[UIImage imageNamed:@"ps.png"];
+//        
+//        return annotationView;
+//    }
 
     
     // Handle any custom annotations.

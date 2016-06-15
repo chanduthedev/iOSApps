@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Utils.h"
+#import "network.h"
 #import <AWSCore/AWSCore.h>
 
 @interface AppDelegate ()
@@ -77,9 +78,23 @@
 
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"APN device token: %@", deviceToken);
+
+    network *networkObj = [network sharedManager];
+    NSMutableDictionary *params =[[NSMutableDictionary alloc] init];
+    
     NSString* newToken = [[[NSString stringWithFormat:@"%@",deviceToken]
                            stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    params[@"gcm_id"]=@"ios";
+    params[@"app_ver"]=@"1.0";
+    params[@"device_id"]=newToken;
+    params[@"imei_no"]=@"testing";
+    
+    [networkObj getCabDetails:@"http://police.nayalabs.com/api/device_reg" params:params completionHandle:^(id response){
+        NSLog(@"reponse is %@", response);
+    }];
+    
+    
     NSLog(@"APN device token as string: %@", newToken);
 }
 
@@ -101,6 +116,26 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo 
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"Notification received: %@", userInfo);
+    UIApplicationState state = [application applicationState];
+    
+    if (state == UIApplicationStateActive) {
+        NSString *cancelTitle = @"Close";
+        NSString *showTitle = @"Show";
+        NSString *message = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some title"
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:cancelTitle
+                                                  otherButtonTitles:showTitle, nil];
+        [alertView show];
+    } else {
+        
+        int badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
+        NSLog(@"badge count is %d", badgeCount);
+        [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount+1;
+        NSLog(@"badge count is %d", [UIApplication sharedApplication].applicationIconBadgeNumber);
+        //Do stuff that you would do if the application was not active
+    }
 }
 
 

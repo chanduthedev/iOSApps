@@ -33,19 +33,6 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    network *instance = [network sharedManager];
-    
-    NSArray *result = [instance getCabDetails:@"http://police.nayalabs.com/api/cab_registrations/get_vehicle_details_by_vehicle_no" vehicleN:@"AP09TVA1213" policeID:@"" deviceNo:@"123" imeiNo:@"123" completionHandle:^(NSArray * response){
-        NSLog(@"reponse is %@", response);
-    }];
-    
-    NSLog(@"result is %@", result);
-    
-
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
 
 -(void)testIsNetworkReachable{
     NSLog(@"connection status is %d",[[network sharedManager] isNetworkAvailable]);
