@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "AccountKit/AccountKit.h"
+#import <MapKit/MapKit.h>
 
 @interface PublicEyeViewController : ViewController <UITableViewDelegate, UITableViewDataSource,UITextViewDelegate, AKFViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     AKFAccountKit *_accountKit;
@@ -25,4 +26,6 @@
 - (IBAction)submitIncident:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *comments;
 @property (weak, nonatomic) IBOutlet UIImage *selectedImage;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
 @end

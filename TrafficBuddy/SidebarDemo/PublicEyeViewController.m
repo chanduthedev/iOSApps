@@ -9,6 +9,7 @@
 #import "PublicEyeViewController.h"
 #import "SWRevealViewController.h"
 #import "Utils.h"
+#import "Annotations.h"
 //#import <AWSCore/AWSCore.h>
 //#import <AWSS3/AWSS3.h>
 //#import <AWSDynamoDB/AWSDynamoDB.h>
@@ -85,6 +86,21 @@
     //    loginViewController.theme = [Themes bicycleTheme];
 }
 
+
+- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"Testing: pinning selected address");
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan)
+        return;
+    
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
+    CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
+    
+    Annotations *annot = [[Annotations alloc] init];
+    annot.coordinate = touchMapCoordinate;
+    [self.mapView addAnnotation:annot];
+    
+}
 
 
 

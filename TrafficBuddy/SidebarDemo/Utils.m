@@ -153,4 +153,9 @@
     }
     return @"";
 }
+
+-(NSArray*) shiftRightOneElement:(NSArray*)elements{
+    
+    return elements;
+}
 @end

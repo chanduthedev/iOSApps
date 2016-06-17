@@ -20,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.recentTrafficUpdates = [[NSMutableArray alloc] init];
     AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1
                                                                                                     identityPoolId:@"CognitoPoolID"];
     
@@ -29,6 +31,11 @@
     AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
     
     
+    UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    NSLog(@"launchOptions are %@",launchOptions);
+    if (localNotif) {
+        NSLog(@"localNotif is %@",localNotif);
+    }
     
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
         // iOS 7.1 or earlier
@@ -84,15 +91,15 @@
     
     NSString* newToken = [[[NSString stringWithFormat:@"%@",deviceToken]
                            stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    params[@"gcm_id"]=@"ios";
-    params[@"app_ver"]=@"1.0";
-    params[@"device_id"]=newToken;
-    params[@"imei_no"]=@"testing";
-    
-    [networkObj getCabDetails:@"http://police.nayalabs.com/api/device_reg" params:params completionHandle:^(id response){
-        NSLog(@"reponse is %@", response);
-    }];
+//TODO: need to uncomment later for new devices
+//    params[@"gcm_id"]=newToken;
+//    params[@"app_ver"]=@"1.0";
+//    params[@"device_id"]=@"notreg";
+//    params[@"imei_no"]=@"ios";
+//    
+//    [networkObj getCabDetails:@"http://police.nayalabs.com/api/device_reg" params:params completionHandle:^(id response){
+//        NSLog(@"reponse is %@", response);
+//    }];
     
     
     NSLog(@"APN device token as string: %@", newToken);
@@ -103,9 +110,6 @@
     NSLog(@"Push received: %@", userInfo);
 }
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler{
-//    NSLog(@"Push received: %@", userInfo);
-//}
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Registration for remote notification failed with error: %@", error.localizedDescription);
@@ -113,12 +117,21 @@
 }
 
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     NSLog(@"Notification received: %@", userInfo);
     UIApplicationState state = [application applicationState];
     
-    if (state == UIApplicationStateActive) {
+    
+    [self.recentTrafficUpdates addObject:[[userInfo valueForKey:@"aps"] valueForKey:@"alert"]];
+    NSLog(@"recent notifcaitons are %@", self.recentTrafficUpdates);
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateInactive) {
+        
+        NSLog(@"in UIApplicationStateInactive state ");
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"inactivePush" object:nil];
+        
+        
+    }else if (state == UIApplicationStateActive) {
         NSString *cancelTitle = @"Close";
         NSString *showTitle = @"Show";
         NSString *message = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
@@ -133,10 +146,25 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
         int badgeCount = [UIApplication sharedApplication].applicationIconBadgeNumber;
         NSLog(@"badge count is %d", badgeCount);
         [UIApplication sharedApplication].applicationIconBadgeNumber = badgeCount+1;
-        NSLog(@"badge count is %d", [UIApplication sharedApplication].applicationIconBadgeNumber);
+        NSLog(@"badge count is %ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber);
         //Do stuff that you would do if the application was not active
     }
 }
 
+
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void  (^)(UIBackgroundFetchResult))completionHandler
+{
+    // Start asynchronous NSOperation, or some other check
+    
+    // Ideally the NSOperation would notify when it has completed, but just for
+    // illustrative purposes, call the completion block after 20 seconds.
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 20 * NSEC_PER_SEC),
+                   dispatch_get_main_queue(), ^{
+                       // Check result of your operation and call completion block with the result
+                       completionHandler(UIBackgroundFetchResultNewData);
+                       NSLog(@"Testing background method");
+                   });
+}
 
 @end

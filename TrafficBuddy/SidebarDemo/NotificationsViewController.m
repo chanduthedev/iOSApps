@@ -8,6 +8,7 @@
 
 #import "NotificationsViewController.h"
 #import "SWRevealViewController.h"
+#import "AppDelegate.h"
 
 @interface NotificationsViewController ()
 
@@ -28,7 +29,7 @@
     self.notifications.delegate = self;
     self.notifications.dataSource = self;
 
-    
+    [self.notifications reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,7 +50,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 10;
+    AppDelegate *sharedApp = ((AppDelegate*)[[UIApplication sharedApplication]delegate]);
+    return [sharedApp.recentTrafficUpdates count];
 }
 
 
@@ -61,8 +63,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    cell.textLabel.text = @"Testing";
+    AppDelegate *sharedApp = ((AppDelegate*)[[UIApplication sharedApplication]delegate]);
+    cell.textLabel.text = [sharedApp.recentTrafficUpdates objectAtIndex:indexPath.row];
     
     return cell;
 }
