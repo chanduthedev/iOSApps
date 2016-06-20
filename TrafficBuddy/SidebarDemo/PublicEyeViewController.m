@@ -49,6 +49,14 @@
     }
     self.categories.hidden = YES;
     // Do any additional setup after loading the view.
+    
+    NSString *preFillPhoneNumber = nil;
+    NSString *inputState = [[NSUUID UUID] UUIDString];
+    UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:preFillPhoneNumber
+                                                                                                            state:inputState];
+    viewController.enableSendToFacebook = YES; // defaults to NO
+    [self _prepareLoginViewController:viewController]; // see below
+    [self presentViewController:viewController animated:YES completion:NULL];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,13 +82,14 @@
 }
 
 - (void)viewController:(UIViewController<AKFViewController> *)viewController didCompleteLoginWithAuthorizationCode:(NSString *)code state:(NSString *)state{
-    NSLog(@"Testing: ");
+    NSLog(@"Code is : %@", code);
 }
 
 
 - (void)_prepareLoginViewController:(UIViewController<AKFViewController> *)loginViewController
 {
     loginViewController.delegate = self;
+    loginViewController.defaultCountryCode = @"IN";
     // Optionally, you may use the Advanced UI Manager or set a theme to customize the UI.
     //    loginViewController.advancedUIManager = _advancedUIManager;
     //    loginViewController.theme = [Themes bicycleTheme];
