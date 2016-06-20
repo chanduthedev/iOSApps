@@ -22,6 +22,7 @@
     // Override point for customization after application launch.
     
     self.recentTrafficUpdates = [[NSMutableArray alloc] init];
+    self.isFaceBookLoggedIn = false;
     AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1
                                                                                                     identityPoolId:@"CognitoPoolID"];
     

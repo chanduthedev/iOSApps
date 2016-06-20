@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "Utils.h"
 #import "Annotations.h"
+#import "AppDelegate.h"
 //#import <AWSCore/AWSCore.h>
 //#import <AWSS3/AWSS3.h>
 //#import <AWSDynamoDB/AWSDynamoDB.h>
@@ -49,14 +50,20 @@
     }
     self.categories.hidden = YES;
     // Do any additional setup after loading the view.
+    AppDelegate *sharedApp = ((AppDelegate*)[[UIApplication sharedApplication]delegate]);
+    NSLog(@"isLoggedIn is %d", [sharedApp isFaceBookLoggedIn]);
+    if (![sharedApp isFaceBookLoggedIn]){
+        NSString *preFillPhoneNumber = nil;
+        NSString *inputState = [[NSUUID UUID] UUIDString];
+        UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:preFillPhoneNumber
+                                                                                                                state:inputState];
+        viewController.enableSendToFacebook = YES; // defaults to NO
+        [self _prepareLoginViewController:viewController]; // see below
+        [self presentViewController:viewController animated:YES completion:NULL];
+    }else{
+        NSLog(@"is already LoggedIn no need to login %d", [sharedApp isFaceBookLoggedIn]);
+    }
     
-    NSString *preFillPhoneNumber = nil;
-    NSString *inputState = [[NSUUID UUID] UUIDString];
-    UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:preFillPhoneNumber
-                                                                                                            state:inputState];
-    viewController.enableSendToFacebook = YES; // defaults to NO
-    [self _prepareLoginViewController:viewController]; // see below
-    [self presentViewController:viewController animated:YES completion:NULL];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,7 +89,10 @@
 }
 
 - (void)viewController:(UIViewController<AKFViewController> *)viewController didCompleteLoginWithAuthorizationCode:(NSString *)code state:(NSString *)state{
+    //need to send this to server
     NSLog(@"Code is : %@", code);
+    AppDelegate *sharedApp = ((AppDelegate*)[[UIApplication sharedApplication]delegate]);
+    [sharedApp setIsFaceBookLoggedIn:true];
 }
 
 
@@ -273,16 +283,6 @@
     NSLog(@"Submitted successfully!! %@", _selectedImage.debugDescription);
     [Utils displayAlert:@"Image Upload success" displayText:@"Congratulations!!"];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    
-    
-//    NSString *inputState = [[NSUUID UUID] UUIDString];
-//    AKFPhoneNumber *phone = [[AKFPhoneNumber alloc] initWithCountryCode:@"IN" phoneNumber:@""];
-//    UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:phone
-//                                                                                                            state:inputState];
-//    //viewController.enableSendToFacebook = YES; // defaults to NO
-//    [self _prepareLoginViewController:viewController]; // see below
-//    [self presentViewController:viewController animated:YES completion:NULL];
     
 }
 
