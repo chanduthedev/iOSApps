@@ -25,7 +25,7 @@
 - (IBAction)upLoadImage:(id)sender;
 - (IBAction)submitIncident:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *comments;
-@property (weak, nonatomic) IBOutlet UIImage *selectedImage;
+@property (strong, nonatomic) IBOutlet UIImage *selectedImage;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

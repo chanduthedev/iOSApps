@@ -23,13 +23,23 @@
     
     self.recentTrafficUpdates = [[NSMutableArray alloc] init];
     self.isFaceBookLoggedIn = false;
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1
-                                                                                                    identityPoolId:@"CognitoPoolID"];
     
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1
-                                                                         credentialsProvider:credentialsProvider];
     
-    AWSServiceManager.defaultServiceManager.defaultServiceConfiguration = configuration;
+    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
+                                                          initWithRegionType:AWSRegionUSEast1
+                                                          identityPoolId:@"us-east-1:dd42b002-e9c2-4920-a190-d2d42fe05095"];
+    
+    NSLog(@"identityId is %@", credentialsProvider.identityId);
+    
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    
+    
+    NSLog(@"regionType is %ld", (long)configuration.regionType);
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+    
+    NSString *cognitoId = credentialsProvider.identityId;
+    NSLog(@"checking AWS %@", cognitoId);
+
     
     
     UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

@@ -11,12 +11,12 @@
 #import "Utils.h"
 #import "Annotations.h"
 #import "AppDelegate.h"
-//#import <AWSCore/AWSCore.h>
-//#import <AWSS3/AWSS3.h>
-//#import <AWSDynamoDB/AWSDynamoDB.h>
-//#import <AWSSQS/AWSSQS.h>
-//#import <AWSSNS/AWSSNS.h>
-//#import <AWSCognito/AWSCognito.h>
+#import <AWSCore/AWSCore.h>
+#import <AWSS3/AWSS3.h>
+#import <AWSDynamoDB/AWSDynamoDB.h>
+#import <AWSSQS/AWSSQS.h>
+#import <AWSSNS/AWSSNS.h>
+#import <AWSCognito/AWSCognito.h>
 
 @interface PublicEyeViewController ()
 
@@ -40,6 +40,7 @@
     self.categories.delegate = self;
     self.categories.dataSource = self;
     self.comments.delegate = self;
+    self.selectedImage = nil;
     self.categoryTypes = [[NSArray alloc] initWithObjects:@"Traffic Voilation",@"Report Traffic Accident",@"Refusal by Taxi/Auto/Public Bus",@"Over charging by Taxi/Auto/Public Bus", @"Misbehaviour by Taxi/Auto/Public Bus", @"Other", nil];
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -52,18 +53,28 @@
     // Do any additional setup after loading the view.
     AppDelegate *sharedApp = ((AppDelegate*)[[UIApplication sharedApplication]delegate]);
     NSLog(@"isLoggedIn is %d", [sharedApp isFaceBookLoggedIn]);
-    if (![sharedApp isFaceBookLoggedIn]){
-        NSString *preFillPhoneNumber = nil;
-        NSString *inputState = [[NSUUID UUID] UUIDString];
-        UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:preFillPhoneNumber
-                                                                                                                state:inputState];
-        viewController.enableSendToFacebook = YES; // defaults to NO
-        [self _prepareLoginViewController:viewController]; // see below
-        [self presentViewController:viewController animated:YES completion:NULL];
-    }else{
-        NSLog(@"is already LoggedIn no need to login %d", [sharedApp isFaceBookLoggedIn]);
-    }
+    //TODO need to uncomment this for facebook SMS validation
+//    if (![sharedApp isFaceBookLoggedIn]){
+//        NSString *preFillPhoneNumber = nil;
+//        NSString *inputState = [[NSUUID UUID] UUIDString];
+//        UIViewController<AKFViewController> *viewController = [_accountKit viewControllerForPhoneLoginWithPhoneNumber:preFillPhoneNumber
+//                                                                                                                state:inputState];
+//        viewController.enableSendToFacebook = YES; // defaults to NO
+//        [self _prepareLoginViewController:viewController]; // see below
+//        [self presentViewController:viewController animated:YES completion:NULL];
+//    }else{
+//        NSLog(@"is already LoggedIn no need to login %d", [sharedApp isFaceBookLoggedIn]);
+//    }
     
+    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
+                                                          initWithRegionType:AWSRegionUSEast1
+                                                          identityPoolId:@"us-east-1:dd42b002-e9c2-4920-a190-d2d42fe05095"];
+
+    
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+    
+    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+        
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,6 +117,9 @@
 }
 
 
+- (void)viewController:(UIViewController<AKFViewController> *)viewController didFailWithError:(NSError *)error{
+    NSLog(@"got FB validation error %@", error.description);
+}
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
 {
     NSLog(@"Testing: pinning selected address");
@@ -230,6 +244,7 @@
     [view addAction:camera];
     [view addAction:gallery];
     [view addAction:cancel];
+    
     [self presentViewController:view animated:YES completion:nil];
     NSLog(@"leaving upLoadImage");
     
@@ -248,48 +263,72 @@
 
 - (IBAction)submitIncident:(id)sender {
     
+    NSLog(@"selected image is %@", _selectedImage);
+    //UIImage *img = [UIImage imageNamed:@"ps.png"];;
     
-//    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
-//    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
-//    uploadRequest.bucket = @"yourBucket";
-//    uploadRequest.key = @"yourKey";
-//    //uploadRequest.body = @"yourDataURL";
-//    
-//    [[transferManager upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
-//                                                       withBlock:^id(AWSTask *task) {
-//                                                           if (task.error) {
-//                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-//                                                                   switch (task.error.code) {
-//                                                                       case AWSS3TransferManagerErrorCancelled:
-//                                                                       case AWSS3TransferManagerErrorPaused:
-//                                                                           break;
-//                                                                           
-//                                                                       default:
-//                                                                           NSLog(@"Error: %@", task.error);
-//                                                                           break;
-//                                                                   }
-//                                                               } else {
-//                                                                   // Unknown error.
-//                                                                   NSLog(@"Error: %@", task.error);
-//                                                               }
-//                                                           }
-//                                                           
-//                                                           if (task.result) {
-//                                                               AWSS3TransferManagerUploadOutput *uploadOutput = task.result;
-//                                                               // The file uploaded successfully.
-//                                                           }
-//                                                           return nil;
-//                                                       }];
-    NSLog(@"Submitted successfully!! %@", _selectedImage.debugDescription);
-    [Utils displayAlert:@"Image Upload success" displayText:@"Congratulations!!"];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    if(_selectedImage == nil){
+        [Utils displayAlert:@"Ooops!!!" displayText:@"Please select a image to upload!!"];
+        return;
+    }
+    NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"image.png"];
+    NSData *imageData = UIImagePNGRepresentation(_selectedImage);
+    [imageData writeToFile:path atomically:YES];
+    
+    AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
+    AWSS3TransferManagerUploadRequest *uploadRequest = [AWSS3TransferManagerUploadRequest new];
+    uploadRequest.bucket = @"bonthapadu1";
+    
+    NSString* currentTime = [[[NSString stringWithFormat:@"%@",[Utils getCurrentTime]]
+                           stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    uploadRequest.key = [currentTime stringByAppendingString:@".png"];
+    
+    //NSString *path = [[NSBundle mainBundle] pathForResource:@"abids" ofType:@"txt"];
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:path];
+    uploadRequest.body = url;
+    
+    [[transferManager upload:uploadRequest] continueWithExecutor:[AWSExecutor mainThreadExecutor]
+                                                       withBlock:^id(AWSTask *task) {
+                                                           if (task.error) {
+                                                               if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
+                                                                   switch (task.error.code) {
+                                                                       case AWSS3TransferManagerErrorCancelled:
+                                                                       case AWSS3TransferManagerErrorPaused:
+                                                                           break;
+                                                                           
+                                                                       default:
+                                                                           [Utils displayAlert:@"Ooops!!!" displayText:task.error.localizedDescription];
+                                                                           NSLog(@"known Error: %@", task.error.description);
+                                                                           break;
+                                                                   }
+                                                               } else {
+                                                                   // Unknown error.
+                                                                   [Utils displayAlert:@"Ooops!!!" displayText:task.error.localizedDescription];
+                                                                   NSLog(@"unknown Error: %@", task.error.localizedDescription);
+                                                               }
+                                                           }
+                                                           
+                                                           if (task.result) {
+                                                               
+                                                               AWSS3TransferManagerUploadOutput *uploadOutput = task.result;
+                                                               NSLog(@"Submitted successfully!! %@", _selectedImage.debugDescription);
+                                                               [Utils displayAlert:@"Image Upload success" displayText:@"Congratulations!!"];
+//                                                               [self.navigationController popToRootViewControllerAnimated:YES];
+                                                               [self dismissViewControllerAnimated:YES completion:^{
+                                                                   //nothing
+                                                               }];
+                                                               // The file uploaded successfully.
+                                                               _selectedImage = nil;
+                                                           }
+                                                           return nil;
+                                                       }];
+    
     
 }
 
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-    _selectedImage= info[UIImagePickerControllerEditedImage];
+    _selectedImage= [info valueForKey:UIImagePickerControllerOriginalImage];
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
