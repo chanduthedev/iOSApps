@@ -66,15 +66,15 @@
 //        NSLog(@"is already LoggedIn no need to login %d", [sharedApp isFaceBookLoggedIn]);
 //    }
     
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
-                                                          initWithRegionType:AWSRegionUSEast1
-                                                          identityPoolId:@"us-east-1:dd42b002-e9c2-4920-a190-d2d42fe05095"];
-
+//    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
+//                                                          initWithRegionType:AWSRegionUSEast1
+//                                                          identityPoolId:@"us-east-1:dd42b002-e9c7-4920-a190-d2d42fe05095"];
+//
+//    
+//    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+//    
+//    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
     
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
-    
-    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
-        
 }
 
 - (void)didReceiveMemoryWarning {
